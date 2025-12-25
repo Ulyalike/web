@@ -1,0 +1,46 @@
+include ../mixins/index.pug
+
+doctype html
+html(lang="en")
+  head
+    title Hexlet Task Manager
+    script(src=assetPath('main.js'))
+    link(href=assetPath('main.css') rel="stylesheet")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+  body.d-flex.flex-column.min-vh-100.bg-light
+    nav.navbar.navbar-expand-lg.navbar-light.bg-white
+      .container
+        a.navbar-brand(href='/')= t('appName')
+        button.navbar-toggler(data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent")
+          span.navbar-toggler-icon
+        .collapse.navbar-collapse(id="navbarToggleExternalContent")
+          ul.navbar-nav.justify-content-end.w-100
+            li.nav-item.me-auto
+              a.nav-link(href='/users')= t('layouts.application.users')
+            if isAuthenticated()
+              li.nav-item
+                a.nav-link(href='/statuses')= t('layouts.application.statuses')
+              li.nav-item
+                a.nav-link(href='/labels')= t('layouts.application.labels')
+              li.nav-item
+                a.nav-link(href='/tasks')= t('layouts.application.tasks')
+              li.nav-item
+                +buttonTo('/session', 'delete')(class="btn nav-link" value=t('layouts.application.signOut'))
+            else
+              li.nav-item
+                a.nav-link(href='/session/new')= t('layouts.application.signIn')
+              li.nav-item
+                a.nav-link(href='/users/new')= t('layouts.application.signUp')
+    .container.wrapper.flex-grow-1
+
+      each messages, type in reply.flash() || []
+        each message in messages
+          div.alert(class=`alert-${getAlertClass(type)}`)= message
+
+      h1.display-4.fw-bold.mt-4
+        block header
+      block content
+
+    footer.bg-dark.text-light
+      .container.py-3
+        p.lead.mb-0 © Hexlet Ltd, 2021

@@ -1,0 +1,25 @@
+extends ../layouts/index.pug
+
+block header
+  = t('labels.index.title')
+
+block content
+  a.btn.btn-primary.mb-5(href='/labels/new')= t('labels.index.buttons.create')
+  .table-responsive
+    table.table.table-borderless.table-striped.mt-5.bg-white
+      thead
+        tr
+          th.py-3= t('labels.index.id')
+          th.py-3= t('labels.index.name')
+          th.py-3= t('labels.index.createdAt')
+          th.py-3= t('labels.index.actions')
+      tbody
+        each label in labels
+          tr
+            td= label.id
+            td= label.name
+            td= formatDate(label.createdAt)
+            td
+              .d-flex
+                a.btn.btn-primary.me-1(href=`/labels/${label.id}/edit`)= t('buttons.change')
+                +buttonTo(`/labels/${label.id}`, 'delete')(class="btn btn-danger" value=t('buttons.delete'))

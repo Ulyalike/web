@@ -1,0 +1,18 @@
+{
+  "users": {
+    "new": {
+      "firstName": "Malika",
+      "lastName": "Hodkiewicz",
+      "email": "malika_hodkiewicz75@live.com"
+    },
+    "existing": {
+      "firstName": "Lawrence",
+      "lastName": "Kulas",
+      "email": "lawrence.kulas87@outlook.com"
+    }
+  },
+  "update": {
+    "firstName": "aaa",
+    "lastName": "bbb"
+  }
+}

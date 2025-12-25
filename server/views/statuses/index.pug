@@ -1,0 +1,25 @@
+extends ../layouts/index.pug
+
+block header
+  = t('statuses.index.title')
+
+block content
+  a.btn.btn-primary(href='/statuses/new')= t('statuses.index.buttons.create')
+  .table-responsive
+    table.table.table-borderless.table-striped.mt-5.bg-white
+      thead
+        tr
+          th= t('statuses.index.id')
+          th= t('statuses.index.name')
+          th= t('statuses.index.createdAt')
+          th= t('statuses.index.actions')
+      tbody
+        each status in statuses
+          tr
+            td= status.id
+            td= status.name
+            td= formatDate(status.createdAt)
+            td
+              .d-flex.flex-wrap
+                a.btn.btn-primary.me-1(href=`/statuses/${status.id}/edit`)=t('buttons.change')
+                +buttonTo(`/statuses/${status.id}`, 'delete')(class="btn btn-danger" value=t('buttons.delete'))

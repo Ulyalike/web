@@ -1,0 +1,13 @@
+extends ../layouts/index.pug
+
+block header
+  = t('tasks.new.title')
+
+block content
+  form(action="/tasks" method="post")
+    +input(task, 'name', errors)(type='text')
+    +inputTextarea(task, 'description', errors)
+    +inputSelect(statuses, 'statusId', errors, task)
+    +inputSelect(executors, 'executorId', errors, task)
+    +inputSelectMultipleLabels(labels, 'labels', errors, task)
+    +submit(task)(value=t('buttons.create'))

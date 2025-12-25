@@ -1,0 +1,37 @@
+## SnapFlow 
+
+
+### Установка
+
+```bash
+npm install
+```
+
+### Запуск
+
+```bash
+npm start
+```
+
+Для разработки:
+```bash
+npm run dev
+```
+
+### Переменные окружения
+
+Скопируйте `.env.example` в `.env` и настройте необходимые переменные:
+
+```bash
+cp .env.example .env
+```
+
+Доступные переменные:
+- `PORT` - порт для запуска сервера (по умолчанию: 5000)
+- `HOST` - хост для запуска сервера (по умолчанию: 0.0.0.0)
+- `NODE_ENV` - окружение (development/production)
+- `SESSION_SECRET` - секретный ключ для сессий
+
+### Деплой
+
+Проект развернут на Render: https://fullstack-javascript-project-6-xfut.onrender.com/

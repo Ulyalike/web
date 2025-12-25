@@ -1,0 +1,107 @@
+- const getInputName = (property) => `data[${property}]`
+- const getInputId = (property) => `data_${property}`
+
+mixin formFor(entity = null)
+  form&attributes(attributes)
+    block
+
+mixin input(entity, propertyName, errors = {})
+  - propertyErrors = get(errors, propertyName)
+  - classLine = 'form-control' + (isEmpty(propertyErrors) ? '' : ' is-invalid')
+  - inputId = getInputId(propertyName)
+  .form-floating.mb-3(class=(errors[propertyName] && 'has-danger'))
+    input(
+      id= inputId
+      name=getInputName(propertyName)
+      class=classLine
+      value=get(entity, propertyName, '')
+      placeholder=t(`forms.${propertyName}`)
+    )&attributes(attributes)
+    if !isEmpty(propertyErrors)
+      .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
+    label(
+      for= inputId
+    )= t(`forms.${propertyName}`)
+
+mixin inputTextarea(entity, propertyName, errors = {})
+  - propertyErrors = get(errors, propertyName)
+  - classLine = 'form-control' + (isEmpty(propertyErrors) ? '' : ' is-invalid')
+  - inputId = getInputId(propertyName)
+  .mb-3(class=(errors[propertyName] && 'has-danger'))
+    label(
+      for= inputId
+    )= t(`forms.${propertyName}`)
+    textarea(
+      id= inputId
+      name=getInputName(propertyName)
+      class=classLine
+      rows="3"
+    )= get(entity, propertyName, '')
+    if !isEmpty(propertyErrors)
+      .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
+
+mixin inputSelect(entities, propertyName, errors = {}, object)
+  - propertyErrors = get(errors, propertyName)
+  - inputId = getInputId(propertyName)
+  - classLine = 'form-control' + (isEmpty(propertyErrors) ? '' : ' is-invalid')
+  .mb-3(class=(errors[propertyName] && 'has-danger'))
+    label(for= inputId)= t(`forms.${propertyName}`)
+    select(
+      id= inputId
+      name=getInputName(propertyName)
+      class=classLine
+      )
+      option
+      each entity in entities
+        option(
+          value= entity.id
+          selected= (Number(object[propertyName]) === Number(entity.id)) ? 'selected' : false 
+          )= entity.name || entity.fullName
+    if !isEmpty(propertyErrors)
+      .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
+
+mixin inputSelectMultipleLabels(entities, propertyName, errors = {}, object)
+  - propertyErrors = get(errors, convertPropertyName(propertyName))
+  - inputId = getInputId(propertyName)
+  - classLine = 'form-select' + (isEmpty(propertyErrors) ? '' : ' is-invalid')
+  .mb-3(class=(errors[propertyName] && 'has-danger'))
+    label(for= inputId)= t(`forms.${propertyName}`)
+    select(
+      id= inputId
+      name=getInputName(propertyName)
+      class=classLine
+      multiple='multiple'
+      )
+      each entity in entities
+        option(
+          value= entity.id
+          selected= (object[propertyName] && object[propertyName].some(({ id }) => id === entity.id)) ? 'selected' : false 
+          )= entity.name
+    if !isEmpty(propertyErrors)
+      .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
+
+mixin inputSelectFilter(entities, propertyName, options)
+  - inputId = getInputId(propertyName)
+
+  label.input-group-text(for=inputId)= t(`tasks.index.${propertyName}`)
+  select.form-select(id=inputId name=propertyName)
+    option
+    each entity in entities
+      - isSelected = options[propertyName]?.includes(entity.id) ?? false
+      option(value=entity.id, selected=isSelected)= entity.name || entity.fullName
+
+mixin inputCheckbox(propertyName, options)
+  - inputId = getInputId(propertyName)
+  - isChecked = options[propertyName]
+
+  .mb-3.form-check
+    input.form-check-input(type='checkbox' id=inputId name=propertyName checked=isChecked)
+    label.form-check-label(for=inputId)= t(`tasks.index.${propertyName}`)
+
+mixin submit(form = null)
+  input(class='btn btn-primary' type='submit')&attributes(attributes)
+
+mixin buttonTo(action, method)
+  form(action=action, method="post")
+    input(name="_method" type="hidden" value=method)
+    input(type='submit')&attributes(attributes)

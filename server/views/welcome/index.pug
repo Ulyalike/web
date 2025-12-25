@@ -1,0 +1,11 @@
+extends ../layouts/index.pug
+
+block content
+  .container
+    .row
+      .col-12
+        .card.shadow.bg-white.rounded-3
+          .card-body.p-5
+            .display-4.fw-bold.mb-0= t('welcome.index.hello')
+            p.lead= t('welcome.index.description')
+            a.btn.btn-primary.btn-lg.px-4.mt-3.fw-bold(href="https://hexlet.io")= t('welcome.index.more')

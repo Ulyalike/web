@@ -1,0 +1,17 @@
+{
+  "common": {
+    "title": "Welcome",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "users": "Users",
+    "settings": "Settings",
+    "signOut": "Sign Out"
+  },
+  "users": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "password": "Password",
+    "newPassword": "New Password"
+  }
+}

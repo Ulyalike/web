@@ -1,0 +1,50 @@
+extends ../layouts/index.pug
+
+block header
+  = t('tasks.index.title')
+
+block content
+  a.btn.btn-primary.mb-5(href='/tasks/new')= t('tasks.index.buttons.create')
+
+  .card.shadow-sm
+    .card-body.p-4
+        +formFor()(action=`/tasks` method='get')
+          .row
+            .col-12.col-md
+              .input-group.mb-3
+                +inputSelectFilter(statuses, 'status', filterOptions)
+            .col-12.col-md
+              .input-group.mb-3
+                +inputSelectFilter(executors, 'executor', filterOptions)
+            .col-12.col-md
+              .input-group.mb-3
+                +inputSelectFilter(labels, 'label', filterOptions)
+          +inputCheckbox('isCreatorUser', filterOptions)
+          +submit(task)(value=t('buttons.show'))
+
+  .table-responsive
+    table.table.table-borderless.table-striped.mt-5.bg-white
+      thead
+        tr
+          th= t('tasks.index.id')
+          th= t('tasks.index.taskName')
+          th= t('tasks.index.status')
+          th= t('tasks.index.creator')
+          th= t('tasks.index.executor')
+          th= t('tasks.index.createdAt')
+          th= t('tasks.index.actions')
+      tbody
+        each task in tasks
+          tr
+            td= task.id
+            td
+              a(href=`/tasks/${task.id}`)
+                = task.name
+            td= task.status.name
+            td= task.creator.fullName
+            td= task.executor && task.executor.fullName
+            td= formatDate(task.createdAt)
+            td
+              .d-flex
+                a.btn.btn-primary.me-1(href=`/tasks/${task.id}/edit`)=t('buttons.change')
+                +buttonTo(`/tasks/${task.id}`, 'delete')(class="btn btn-danger" value=t('buttons.delete'))

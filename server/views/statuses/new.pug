@@ -1,0 +1,9 @@
+extends ../layouts/index.pug
+
+block header
+  = t('statuses.new.title')
+
+block content
+  +formFor()(action='/statuses' method='post')
+    +input(status, 'name', errors)(type="text")
+    +submit(status)(value=t('buttons.create'))

@@ -1,0 +1,9 @@
+extends ../layouts/index.pug
+
+block header
+  = t('labels.new.title')
+
+block content
+  +formFor(label)(action='/labels' method='post')
+    +input(label, 'name', errors)(type="text")
+    +submit(label)(value=t('buttons.create'))

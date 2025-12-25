@@ -1,0 +1,13 @@
+extends ../layouts/index.pug
+
+block header
+  = t('users.edit.title')
+
+block content
+  +formFor()(action=`/users/${user.id}` method='post')
+    +input(user, 'firstName', errors)(type='text' value= user.firstName)
+    +input(user, 'lastName', errors)(type='text' value= user.lastName)
+    +input(user, 'email', errors)(type='text' value= user.email)
+    +input(user, 'password', errors)(type='password' value='')
+    input(name='_method' type='hidden' value='patch')
+    +submit(user)(value=t('buttons.change'))

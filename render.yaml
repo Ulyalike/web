@@ -1,0 +1,29 @@
+databases:
+  - name: my_postgres_db
+    plan: free
+    databaseName: myapp_db
+    user: myapp_user
+
+services:
+  - type: web
+    name: fastify-app
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: NODE_ENV=production make setup
+    startCommand: make start-prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: my_postgres_db
+          property: connectionString
+    # healthCheckPath: /health
+    autoDeploy: false
+
+version: "1"
