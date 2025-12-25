@@ -34,4 +34,4 @@ cp .env.example .env
 
 ### Деплой
 
-Проект развернут на Render: https://fullstack-javascript-project-6-xfut.onrender.com/
+Проект развернут на Render: 
